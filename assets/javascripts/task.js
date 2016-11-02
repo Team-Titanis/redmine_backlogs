@@ -19,7 +19,10 @@ RB.Task = RB.Object.create(RB.Issue, {
       j.delegate('.editable', 'click', this.handleClick);
     }
   },
-
+  refresh : function (update){
+      RB.Issue.refresh.call(this,update);
+      this.$.attr('style',update.$.attr('style'));
+  },
   beforeSave: function(){
     var c = this.$.find('select.assigned_to_id').find(':selected').attr('color');
     var c_light = this.$.find('select.assigned_to_id').find(':selected').attr('color_light');

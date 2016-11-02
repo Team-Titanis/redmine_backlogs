@@ -72,7 +72,7 @@ module Backlogs
           backlogs_filters["release_id"] = {
             :type => :list_optional,
             :name => l(:field_release),
-            :values => RbRelease.find(:all, :conditions => ["project_id IN (?)", project], :order => 'name ASC').collect { |d| [d.name, d.id.to_s]},
+            :values => RbRelease.where(project_id: project).order('name ASC').collect { |d| [d.name, d.id.to_s]},
             :order => 21
           }
         end
@@ -139,7 +139,7 @@ module Backlogs
       
       private
       def show_backlogs_issue_items?(project)
-        !project.nil? and project.module_enabled?('backlogs')
+        project.nil? or project.module_enabled?('backlogs')
       end
     end
 
